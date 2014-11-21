@@ -6,6 +6,7 @@ a_term    = "iTerm"
 a_pyide   = "PyCharm"
 a_vim     = "MacVim"
 a_irc     = "Textual"
+a_hermes  = "Hermes"
 
 local appkeys = {}
 appkeys["1"] = a_web
@@ -20,6 +21,55 @@ lcd = "Color LCD"
 -- home
 acer = "V223W"
 samsung = "SyncMaster"
+
+-- layouts will be:
+-- 1) n:1 lcd only
+-- 2) n:2 lcd plus external (acer or samsung) XX or work
+-- 3) n:3 lcd plus 2 external (acer, samsung)
+layout_lcd = {
+  {a_web, nil, lcd, hs.layout.maximized, nil, nil},
+  {a_chat, nil, lcd, hs.layout.maximized, nil, nil},
+  {a_term, nil, lcd, hs.layout.maximized, nil, nil},
+  {a_pyide, nil, lcd, hs.layout.maximized, nil, nil},
+  {a_vim, nil, lcd, hs.layout.maximized, nil, nil},
+  {a_irc, nil, lcd, hs.layout.maximized, nil, nil},
+}
+layout_3 = {
+  {a_web, nil, acer, hs.layout.maximized, nil, nil},
+  {a_chat, nil, acer, hs.layout.maximized, nil, nil},
+  {a_term, nil, samsung, hs.layout.maximized, nil, nil},
+  {a_pyide, nil, samsung, hs.layout.maximized, nil, nil},
+  {a_vim, nil, samsung, hs.layout.maximized, nil, nil},
+  {a_irc, nil, acer, hs.layout.maximized, nil, nil},
+  {a_hermes, nil, lcd, nil, nil, nil},
+}
+
+
+-- screen watcher 
+function mon_change()
+    print("monitor list")
+    local count = 0
+    for k,v in pairs(hs.screen:allScreens()) do 
+        print(k, v:name())
+        count = count + 1
+    end
+    if count == 1 then
+        hs.alert.show("LCD Layout")
+    elseif count == 2 then
+        hs.alert.show("2 Monitor Layout")
+    elseif count == 3 then
+        hs.layout.apply(layout_3)
+        hs.alert.show("3 Monitor Layout")
+    else
+        hs.alert.show("Unknown Monitor Layout")
+    end
+end
+hs.screen.watcher.new(mon_change):start()
+
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "L", function()
+    mon_change()
+end)
+
 
 -- application hotkeys
 for key, title in pairs(appkeys) do 
@@ -47,7 +97,8 @@ end)
 
 -- config autoreload
 function reload_config(files)
-    hs.reload()
+    hs.reload() 
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
 hs.alert.show("Config loaded")
+
