@@ -21,6 +21,9 @@ lcd = "Color LCD"
 -- home
 acer = "V223W"
 samsung = "SyncMaster"
+dell = "DELL U2412M"
+-- work
+asus = "VS24A"
 
 -- layouts will be:
 -- 1) n:1 lcd only
@@ -34,6 +37,18 @@ layout_lcd = {
   {a_vim, nil, lcd, hs.layout.maximized, nil, nil},
   {a_irc, nil, lcd, hs.layout.maximized, nil, nil},
 }
+function get_layout_2(external)
+    return {
+    {a_web, nil, external, hs.layout.maximized, nil, nil},
+    {a_chat, nil, lcd, hs.layout.maximized, nil, nil},
+    {a_term, nil, external, hs.layout.maximized, nil, nil},
+    {a_pyide, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {a_vim, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {a_irc, nil, lcd, hs.layout.maximized, nil, nil},
+    {a_hermes, nil, lcd, nil, nil, nil},
+    }
+end
+
 layout_3 = {
   {a_web, nil, acer, hs.layout.maximized, nil, nil},
   {a_chat, nil, acer, hs.layout.maximized, nil, nil},
@@ -55,8 +70,11 @@ function mon_change()
     end
     if count == 1 then
         hs.alert.show("LCD Layout")
+        hs.layout.apply(layout_lcd)
     elseif count == 2 then
         hs.alert.show("2 Monitor Layout")
+        -- have to figure out which external
+        hs.layout.apply(get_layout_2(dell))
     elseif count == 3 then
         hs.layout.apply(layout_3)
         hs.alert.show("3 Monitor Layout")
@@ -64,7 +82,7 @@ function mon_change()
         hs.alert.show("Unknown Monitor Layout")
     end
 end
-hs.screen.watcher.new(mon_change):start()
+-- hs.screen.watcher.new(mon_change):start()
 
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "L", function()
     mon_change()
