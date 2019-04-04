@@ -2,30 +2,29 @@ hs.consoleOnTop(true)
 
 -- application titles
 a_web     = "Google Chrome"
-a_web2    = "Firefox"
 a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
 a_clion   = "CLion"
-a_vim     = "MacVim"
-a_irc     = "Textual"
-a_mail    = "Mail"
-a_cal     = "Fantastical 2"
+a_cal     = "Fantastical"
 a_todo    = "Todoist"
 a_sublime  = "Sublime Text"
-a_creator = "Qt Creator"
+a_goland = "GoLand"
+a_zoom    = "zoom.us"
+a_fusion  = "VMware Fusion"
+a_modeler = "pgModeler"
 
 local appkeys = {}
 appkeys["1"] = a_web
-appkeys["2"] = a_web2
+appkeys["2"] = a_fusion
 appkeys["3"] = a_chat
 appkeys["4"] = a_term 
 appkeys["5"] = a_pyide
-appkeys["6"] = a_vim
-appkeys["7"] = a_todo
-appkeys["8"] = a_mail
-appkeys["9"] = a_clion
-appkeys["0"] = a_sublime
+appkeys["6"] = a_goland
+appkeys["7"] = a_clion
+appkeys["8"] = a_zoom
+appkeys["9"] = a_todo
+appkeys["0"] = a_modeler
 
 -- monitors
 lcd = "Color LCD"
@@ -44,6 +43,7 @@ layout_lcd = {
   {a_chat, nil, lcd, hs.layout.maximized, nil, nil},
   {a_term, nil, lcd, hs.layout.maximized, nil, nil},
   {a_pyide, nil, lcd, hs.layout.maximized, nil, nil},
+  {a_goland, nil, lcd, hs.layout.maximized, nil, nil},
   {a_clion, nil, lcd, hs.layout.maximized, nil, nil},
   {a_vim, nil, lcd, hs.layout.maximized, nil, nil},
   {a_irc, nil, lcd, hs.layout.maximized, nil, nil},
@@ -58,6 +58,7 @@ function get_layout_ext(external)
     {a_term, nil, external, hs.layout.maximized, nil, nil},
     {a_pyide, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_clion, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {a_goland, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_sublime, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_vim, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_irc, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
@@ -73,6 +74,7 @@ function get_layout_2(external)
     {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_term, nil, external, hs.layout.maximized, nil, nil},
     {a_clion, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {a_goland, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_pyide, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_sublime, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_vim, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
