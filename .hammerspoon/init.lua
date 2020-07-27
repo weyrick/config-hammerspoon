@@ -6,25 +6,26 @@ a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
 a_clion   = "CLion"
-a_cal     = "Fantastical"
 a_todo    = "Todoist"
 a_sublime  = "Sublime Text"
 a_goland = "GoLand"
 a_zoom    = "zoom.us"
 a_fusion  = "VMware Fusion"
 a_modeler = "pgModeler"
+a_mail    = "Boxy for Gmail"
+a_cal     = "Boxy for Calendar"
 
 local appkeys = {}
 appkeys["1"] = a_web
-appkeys["2"] = a_fusion
+appkeys["2"] = a_cal
 appkeys["3"] = a_chat
 appkeys["4"] = a_term 
-appkeys["5"] = a_pyide
+appkeys["5"] = a_mail
 appkeys["6"] = a_goland
 appkeys["7"] = a_clion
 appkeys["8"] = a_zoom
-appkeys["9"] = a_todo
-appkeys["0"] = a_modeler
+appkeys["9"] = a_pyide
+appkeys["0"] = a_fusion
 
 -- monitors
 lcd = "Color LCD"
@@ -150,6 +151,18 @@ for key, title in pairs(appkeys) do
     end
     end)
 end
+
+-- special google window version (by title)
+-- PAD2
+-- hs.hotkey.bind({}, "pad2", function()
+-- 	local window_title_pat = 'Calendar'
+--     print('starting calendar search ')
+
+--     local win = hs.appfinder.windowFromWindowTitlePattern(window_title_pat)
+--     if win then 
+--         win:focus()
+--     end
+-- end)
 
 -- maximize active window
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "M", function()
