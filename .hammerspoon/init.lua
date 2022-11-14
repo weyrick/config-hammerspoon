@@ -6,14 +6,12 @@ a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
 a_clion   = "CLion"
-a_todo    = "Todoist"
 a_sublime  = "Sublime Text"
 a_goland = "GoLand"
 a_zoom    = "zoom.us"
 a_fusion  = "VMware Fusion"
-a_modeler = "pgModeler"
-a_mail    = "Boxy for Gmail"
-a_cal     = "Boxy for Calendar"
+a_mail    = "^Mail.+"
+a_cal     = "^Calendar.+"
 
 local appkeys = {}
 appkeys["1"] = a_web
@@ -25,7 +23,7 @@ appkeys["6"] = a_goland
 appkeys["7"] = a_clion
 appkeys["8"] = a_zoom
 appkeys["9"] = a_pyide
-appkeys["0"] = a_fusion
+appkeys["0"] = a_sublime
 
 -- monitors
 lcd = "Color LCD"
@@ -57,9 +55,9 @@ function get_layout_ext(external)
     {a_web2, nil, external, hs.layout.maximized, nil, nil},
     {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_term, nil, external, hs.layout.maximized, nil, nil},
-    {a_pyide, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_clion, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_goland, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {a_pyide, nil, external, hs.layout.maximized, nil, nil},
+    {a_clion, nil, external, hs.layout.maximized, nil, nil},
+    {a_goland, nil, external, hs.layout.maximized, nil, nil},
     {a_sublime, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_vim, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_irc, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
@@ -136,7 +134,6 @@ for key, title in pairs(appkeys) do
     hs.hotkey.bind({"cmd","alt"}, key, function()
     print('starting appFromName: ' .. title)
     local app = hs.appfinder.appFromName(title)
-    print('stopping appFromName')
     if app then 
         app:activate()
     end
@@ -145,9 +142,14 @@ for key, title in pairs(appkeys) do
     hs.hotkey.bind({}, "pad" .. key, function()
     print('starting appFromName: ' .. title)
     local app = hs.appfinder.appFromName(title)
-    print('stopping appFromName')
     if app then 
         app:activate()
+    else
+        print('starting windowFromWindowTitle: ' .. title)
+        local win = hs.appfinder.windowFromWindowTitlePattern(title)
+        if win then 
+            win:focus()
+        end
     end
     end)
 end
