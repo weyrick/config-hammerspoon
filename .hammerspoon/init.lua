@@ -1,7 +1,7 @@
 hs.consoleOnTop(true)
 
 -- application titles
-a_web     = "Google Chrome"
+a_web     = "^Main Browser.+"
 a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
@@ -136,6 +136,12 @@ for key, title in pairs(appkeys) do
     local app = hs.appfinder.appFromName(title)
     if app then 
         app:activate()
+    else
+        print('starting windowFromWindowTitle: ' .. title)
+        local win = hs.appfinder.windowFromWindowTitlePattern(title)
+        if win then 
+            win:focus()
+        end
     end
     end)
     -- one key version on numpad
