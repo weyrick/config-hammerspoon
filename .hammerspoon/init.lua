@@ -1,4 +1,5 @@
 hs.consoleOnTop(true)
+hs.application.enableSpotlightForNameSearches(true)
 
 -- application titles
 a_web     = "^Main Browser.+"
@@ -6,8 +7,8 @@ a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
 a_clion   = "CLion"
-a_sublime  = "Sublime Text"
-a_goland = "GoLand"
+a_sublime = "Sublime Text"
+a_goland  = "GoLand"
 a_zoom    = "zoom.us"
 a_fusion  = "VMware Fusion"
 a_mail    = "^Mail.+"
@@ -26,7 +27,7 @@ appkeys["9"] = a_pyide
 appkeys["0"] = a_sublime
 
 -- monitors
-lcd = "Color LCD"
+lcd = "Built-in Retina Display"
 -- home
 dell = "DELL U2412M"
 -- work
@@ -38,7 +39,6 @@ asus = "VS24A"
 -- 3) n:1 external only (dell or asus)
 layout_lcd = {
   {a_web, nil, lcd, hs.layout.maximized, nil, nil},
-  {a_web2, nil, lcd, hs.layout.maximized, nil, nil},
   {a_chat, nil, lcd, hs.layout.maximized, nil, nil},
   {a_term, nil, lcd, hs.layout.maximized, nil, nil},
   {a_pyide, nil, lcd, hs.layout.maximized, nil, nil},
@@ -52,7 +52,6 @@ layout_lcd = {
 function get_layout_ext(external)
     return {
     {a_web, nil, external, hs.layout.maximized, nil, nil},
-    {a_web2, nil, external, hs.layout.maximized, nil, nil},
     {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_term, nil, external, hs.layout.maximized, nil, nil},
     {a_pyide, nil, external, hs.layout.maximized, nil, nil},
@@ -69,7 +68,6 @@ end
 function get_layout_2(external)
     return {
     {a_web, nil, external, hs.layout.maximized, nil, nil},
-    {a_web2, nil, external, hs.layout.maximized, nil, nil},
     {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_term, nil, external, hs.layout.maximized, nil, nil},
     {a_clion, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
@@ -132,13 +130,14 @@ end)
 for key, title in pairs(appkeys) do 
     -- three key version
     hs.hotkey.bind({"cmd","alt"}, key, function()
-    print('starting appFromName: ' .. title)
-    local app = hs.appfinder.appFromName(title)
+    print('starting application.get: ' .. title)
+    local app = hs.application.find(title,true,true)
     if app then 
+        print(app)
         app:activate()
     else
-        print('starting windowFromWindowTitle: ' .. title)
-        local win = hs.appfinder.windowFromWindowTitlePattern(title)
+        print('starting window.get: ' .. title)
+        local win = hs.window.find(title)
         if win then 
             win:focus()
         end
@@ -146,31 +145,20 @@ for key, title in pairs(appkeys) do
     end)
     -- one key version on numpad
     hs.hotkey.bind({}, "pad" .. key, function()
-    print('starting appFromName: ' .. title)
-    local app = hs.appfinder.appFromName(title)
+    print('starting application.get: ' .. title)
+    local app = hs.application.find(title,true,true)
     if app then 
+        print(app)
         app:activate()
     else
-        print('starting windowFromWindowTitle: ' .. title)
-        local win = hs.appfinder.windowFromWindowTitlePattern(title)
+        print('starting window.get: ' .. title)
+        local win = hs.window.find(title)
         if win then 
             win:focus()
         end
     end
     end)
 end
-
--- special google window version (by title)
--- PAD2
--- hs.hotkey.bind({}, "pad2", function()
--- 	local window_title_pat = 'Calendar'
---     print('starting calendar search ')
-
---     local win = hs.appfinder.windowFromWindowTitlePattern(window_title_pat)
---     if win then 
---         win:focus()
---     end
--- end)
 
 -- maximize active window
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "M", function()
@@ -203,11 +191,6 @@ function runAppleScript(file)
     script_body = readAll(file)
     hs.applescript.applescript(script_body)
 end
-
--- special hotkey to run apple script to switch to gmail
---hs.hotkey.bind({}, "pad2", function()
---    runAppleScript(os.getenv("HOME") .. "/bin/switch_to_gmail.scpt")
---end)
 
 -- config autoreload
 function reload_config(files)
