@@ -30,55 +30,30 @@ appkeys["0"] = a_sublime
 lcd = "Built-in Retina Display"
 -- home
 dell = "DELL U2412M"
--- work
-asus = "VS24A"
 
 -- layouts will be:
 -- 1) n:1 lcd only
 -- 2) n:2 lcd plus external (dell or asus)
 -- 3) n:1 external only (dell or asus)
 layout_lcd = {
-  {a_web, nil, lcd, hs.layout.maximized, nil, nil},
+  {nil, a_web, lcd, hs.layout.maximized, nil, nil},
   {a_chat, nil, lcd, hs.layout.maximized, nil, nil},
   {a_term, nil, lcd, hs.layout.maximized, nil, nil},
   {a_pyide, nil, lcd, hs.layout.maximized, nil, nil},
   {a_goland, nil, lcd, hs.layout.maximized, nil, nil},
   {a_clion, nil, lcd, hs.layout.maximized, nil, nil},
-  {a_vim, nil, lcd, hs.layout.maximized, nil, nil},
-  {a_irc, nil, lcd, hs.layout.maximized, nil, nil},
   {a_sublime, nil, lcd, hs.layout.maximized, nil, nil},
-  {a_creator, nil, lcd, hs.layout.maximized, nil, nil},
 }
 function get_layout_ext(external)
     return {
-    {a_web, nil, external, hs.layout.maximized, nil, nil},
+    {nil, a_web, external, hs.layout.maximized, nil, nil},
+    {nil, a_mail, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     {a_term, nil, external, hs.layout.maximized, nil, nil},
     {a_pyide, nil, external, hs.layout.maximized, nil, nil},
-    {a_clion, nil, external, hs.layout.maximized, nil, nil},
     {a_goland, nil, external, hs.layout.maximized, nil, nil},
+    {a_clion, nil, external, hs.layout.maximized, nil, nil},
     {a_sublime, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_vim, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_irc, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {nil, a_cal, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_creator, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-
-    }
-end
-function get_layout_2(external)
-    return {
-    {a_web, nil, external, hs.layout.maximized, nil, nil},
-    {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_term, nil, external, hs.layout.maximized, nil, nil},
-    {a_clion, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_goland, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_pyide, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_sublime, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_vim, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_irc, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_creator, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {nil, a_cal, lcd, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {nil, a_todo, lcd, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
     }
 end
 
@@ -93,8 +68,6 @@ function mon_change()
         count = count + 1
         if v:name() == dell then
             cur_ext = dell
-        elseif v:name() == asus then
-            cur_ext = asus
         elseif v:name() == lcd then
             have_lcd = true
         end
@@ -108,9 +81,6 @@ function mon_change()
             hs.alert.show("External Layout")
             hs.layout.apply(get_layout_ext(cur_ext))
         end
-    elseif count == 2 then
-        hs.alert.show("2 Monitor Layout")
-        hs.layout.apply(get_layout_2(cur_ext))
     else
         hs.alert.show("Unknown Monitor Layout")
     end
