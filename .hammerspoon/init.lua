@@ -1,30 +1,33 @@
 hs.consoleOnTop(true)
 hs.application.enableSpotlightForNameSearches(true)
 
+-- window titles (typically browser windows)
+w_web     = "^Main Browser.+"
+w_mail    = "^Mail.+"
+w_cal     = "^Calendar.+"
+w_notion  = "^Notion.+"
 -- application titles
-a_web     = "^Main Browser.+"
 a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
-a_clion   = "CLion"
+a_clion   = "CLion-EAP"
 a_sublime = "Sublime Text"
 a_goland  = "GoLand"
 a_zoom    = "zoom.us"
-a_fusion  = "VMware Fusion"
-a_mail    = "^Mail.+"
-a_cal     = "^Calendar.+"
+-- a_linear  = "Linear"
+-- a_notion  = "Notion"
 
 local appkeys = {}
-appkeys["1"] = a_web
-appkeys["2"] = a_cal
+appkeys["1"] = w_web
+appkeys["2"] = w_cal
 appkeys["3"] = a_chat
 appkeys["4"] = a_term 
-appkeys["5"] = a_mail
-appkeys["6"] = a_goland
-appkeys["7"] = a_clion
-appkeys["8"] = a_zoom
-appkeys["9"] = a_pyide
-appkeys["0"] = a_sublime
+appkeys["5"] = w_mail
+appkeys["6"] = a_pyide
+appkeys["7"] = a_goland
+appkeys["8"] = a_clion
+appkeys["9"] = a_zoom
+appkeys["0"] = w_notion
 
 -- monitors
 lcd = "Built-in Retina Display"
@@ -36,7 +39,7 @@ dell = "DELL U2412M"
 -- 2) n:2 lcd plus external (dell or asus)
 -- 3) n:1 external only (dell or asus)
 layout_lcd = {
-  {nil, a_web, lcd, hs.layout.maximized, nil, nil},
+  {nil, w_web, lcd, hs.layout.maximized, nil, nil},
   {a_chat, nil, lcd, hs.layout.maximized, nil, nil},
   {a_term, nil, lcd, hs.layout.maximized, nil, nil},
   {a_pyide, nil, lcd, hs.layout.maximized, nil, nil},
@@ -46,9 +49,10 @@ layout_lcd = {
 }
 function get_layout_ext(external)
     return {
-    {nil, a_web, external, hs.layout.maximized, nil, nil},
-    {nil, a_mail, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
-    {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {nil, w_web, external, hs.layout.maximized, nil, nil},
+    {nil, w_mail, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+--    {a_chat, nil, external, hs.geometry.rect(0.15, 0, 0.85, 1), nil, nil},
+    {a_chat, nil, external, hs.layout.maximized, nil, nil}, 
     {a_term, nil, external, hs.layout.maximized, nil, nil},
     {a_pyide, nil, external, hs.layout.maximized, nil, nil},
     {a_goland, nil, external, hs.layout.maximized, nil, nil},
