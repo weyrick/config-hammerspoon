@@ -7,6 +7,7 @@ w_mail    = "^Mail.+"
 w_cal     = "^Calendar.+"
 w_notion  = "^Notion.+"
 -- application titles
+a_chrome  = "Chrome"
 a_chat    = "Slack"
 a_term    = "iTerm2"
 a_pyide   = "PyCharm"
@@ -14,20 +15,24 @@ a_clion   = "CLion-EAP"
 a_sublime = "Sublime Text"
 a_goland  = "GoLand"
 a_zoom    = "zoom.us"
--- a_linear  = "Linear"
--- a_notion  = "Notion"
+a_not_c   = "Notion Calendar"
+a_not_m   = "Notion Mail"
+a_linear  = "Linear"
+a_notion  = "Notion"
+a_chatgpt = "ChatGPT"
+a_claude  = "Claude"
 
 local appkeys = {}
-appkeys["1"] = w_web
+appkeys["1"] = a_chrome
 appkeys["2"] = w_cal
 appkeys["3"] = a_chat
-appkeys["4"] = a_term 
-appkeys["5"] = w_mail
-appkeys["6"] = a_pyide
-appkeys["7"] = a_goland
-appkeys["8"] = a_clion
-appkeys["9"] = a_zoom
-appkeys["0"] = w_notion
+appkeys["4"] = a_claude
+appkeys["5"] = a_not_m
+appkeys["6"] = a_notion
+appkeys["7"] = a_chatgpt
+appkeys["8"] = a_zoom
+-- appkeys["9"] = a_claude
+-- appkeys["0"] = a_zoom
 
 -- monitors
 lcd = "Built-in Retina Display"
@@ -99,6 +104,11 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "K", function()
     mon_change()
 end)
 
+local allWindows = hs.window.allWindows()
+for _, window in ipairs(allWindows) do
+    local windowTitle = window:title()
+    print('i see window: ' .. windowTitle)
+end
 
 -- application hotkeys
 for key, title in pairs(appkeys) do 
@@ -128,6 +138,27 @@ for key, title in pairs(appkeys) do
         print('starting window.get: ' .. title)
         local win = hs.window.find(title)
         if win then 
+            win:focus()
+        end
+    end
+    end)
+end
+
+-- F-key application hotkeys
+local fkeys = {}
+fkeys["f19"] = a_term
+
+for key, title in pairs(fkeys) do
+    hs.hotkey.bind({}, key, function()
+    print('starting application.get: ' .. title)
+    local app = hs.application.find(title,true,true)
+    if app then
+        print(app)
+        app:activate()
+    else
+        print('starting window.get: ' .. title)
+        local win = hs.window.find(title)
+        if win then
             win:focus()
         end
     end
