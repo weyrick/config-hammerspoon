@@ -3,9 +3,10 @@ hs.application.enableSpotlightForNameSearches(true)
 
 -- window titles (typically browser windows)
 w_web     = "^Main Browser.+"
-w_mail    = "^Mail.+"
+w_mail    = "Gmail"
 w_cal     = "^Calendar.+"
 w_notion  = "^Notion.+"
+w_gcal    = "Google Calendar"
 -- application titles
 a_chrome  = "Chrome"
 a_chat    = "Slack"
@@ -24,10 +25,10 @@ a_claude  = "Claude"
 
 local appkeys = {}
 appkeys["1"] = a_chrome
-appkeys["2"] = w_cal
+appkeys["2"] = w_gcal
 appkeys["3"] = a_chat
 appkeys["4"] = a_claude
-appkeys["5"] = a_not_m
+appkeys["5"] = w_mail
 appkeys["6"] = a_notion
 appkeys["7"] = a_chatgpt
 appkeys["8"] = a_zoom
@@ -147,6 +148,7 @@ end
 -- F-key application hotkeys
 local fkeys = {}
 fkeys["f19"] = a_term
+fkeys["f20"] = a_sublime
 
 for key, title in pairs(fkeys) do
     hs.hotkey.bind({}, key, function()
